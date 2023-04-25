@@ -15,3 +15,15 @@ export class registerDTO{
   clave: string;
 
 }
+
+export class sessionDTO{
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  clave: string;
+
+}
