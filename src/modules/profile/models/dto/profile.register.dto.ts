@@ -1,6 +1,6 @@
-import { IsNotEmpty, IsNumber, IsString } from "class-validator";
+import { IsNumber, IsString,  IsNotEmpty, IsEmail, IsDate } from 'class-validator';
 
-export class profileDTO {
+export class personDTO{
 
   @IsString()
   buscador: string;

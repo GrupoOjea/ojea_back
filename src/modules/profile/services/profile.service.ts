@@ -1,8 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ProfileEntity } from '../models/entities/profile.entity';
 import { Repository } from 'typeorm';
-import { profileDTO } from '../models/dto/profile.register.dto';
+import { ProfileEntity } from '../models/entities/profile.entity';
 
 @Injectable()
 export class ProfileService {
@@ -12,10 +11,15 @@ export class ProfileService {
     private ProfileReposository: Repository<ProfileEntity>
   ){}
 
-  // Funcion para encriptar obtener personas segun sus habilidades
-  async getProfile(data: profileDTO): Promise<string>{
-    
+  // Obtiene los datos de la persona
+  async getPerson(personBody): Promise<any>{
+
     try{
+
+      const data = {
+        buscador: personBody.buscador,
+        donde: personBody.donde
+      }
       const getData = this.ProfileReposository.query(
         `SELECT \
           p.region, \
@@ -30,17 +34,22 @@ export class ProfileService {
         FROM persona p \
         INNER JOIN educacion e \
           ON e.fk_persona = p.id \
-        INNER JOIN habilidades h \
+        INNER JOIN habilidades h \ 
           ON e.fk_persona = p.id \
         WHERE CONCAT(h.texto_habilidades, e.institucion, e.titulo) ILIKE '%${data.buscador}%' \
-          AND CONCAT(p.region, p.comuna) ILIKE '%${data.donde}%'
-          `
+          AND CONCAT(p.region, p.comuna) ILIKE '%${data.donde}%' \
+        `
       );
+      console.log(getData);
       return getData;
+
     }
     catch{
       throw new BadRequestException('Hubo un error', { cause: new Error() });
     }
+    
   }
 
+
+  
 }

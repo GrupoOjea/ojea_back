@@ -1,10 +1,9 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DatabaseModule } from 'src/database/database.mudule';
-import { ProfileEntity } from './models/entities/profile.entity';
 import { ProfileController } from './controllers/profile.controller';
+import { ProfileEntity } from './models/entities/profile.entity';
 import { ProfileService } from './services/profile.service';
-
 
 @Module({
   imports: [
