@@ -36,7 +36,7 @@ export class LoginService {
         fecha_creacion: new Date(Date.now())
       }
       const dataInsert = await this.LoginReposository.save(dataBody);
-      return {"id": dataInsert.id};
+      return {"id": dataInsert.id}; 
     }
 
   }
