@@ -4,6 +4,9 @@ import { DatabaseModule } from 'src/database/database.mudule';
 import { ProfileController } from './controllers/profile.controller';
 import { ProfileEntity } from './models/entities/profile.entity';
 import { ProfileService } from './services/profile.service';
+import { ProfileEntity } from './models/entities/profile.entity';
+import { ProfileController } from './controllers/profile.controller';
+import { ProfileService } from './services/profile.service';
 
 @Module({
   imports: [

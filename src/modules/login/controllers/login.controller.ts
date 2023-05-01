@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Post, Put, Headers } from '@nestjs/common';
 import { newPasswordDTO, registerDTO, resetPasswordDTO, sessionDTO } from '../models/dto/login.register.dto';
 import { LoginService } from '../services/login.service';
+import { LoginService } from '../services/login.service';
+import { registerDTO, sessionDTO } from '../models/dto/login.register.dto';
 
 @Controller('login')
 export class LoginController {
@@ -15,6 +17,7 @@ export class LoginController {
   async postSessionLogin(@Body() sessionBody: sessionDTO): Promise<string>{
     return await this.loginService.sessionLogin(sessionBody);
   }
+
 
   @Put('forgot-password')
   async forgotPassword(@Body() reqbody: resetPasswordDTO){

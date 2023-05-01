@@ -8,6 +8,8 @@ import * as otpGenerator from 'otp-generator';
 import { ProfileEntity } from 'src/modules/profile/models/entities/profile.entity';
 import { transporter } from 'src/mailer/mailer';
 import { newPasswordDTO, resetPasswordDTO } from '../models/dto/login.register.dto';
+import { ProfileEntity } from 'src/modules/profile/models/entities/profile.entity';
+
 
 @Injectable()
 export class LoginService {
@@ -24,7 +26,7 @@ export class LoginService {
 
     const existsUser = await this.LoginReposository.findOne({where: {email: registerBody.email}});
     if(existsUser){
-      
+     
       throw new HttpException('Usuario ya existente', HttpStatus.ACCEPTED);
     }
     else {
@@ -80,7 +82,10 @@ export class LoginService {
 
       // Obtiene nombre y apellido hasta el primer espacio, luego concatene y deja el primer nombre y primer apellido
         const namePersona = getPersona.nombre.split(' ').shift()+' '+getPersona.apellido.split(' ').shift();
+
         const newBody = { 
+
+        const newBody = {
           "estado": validateUser.estado,
           "estatus_registro": validateUser.estatus_registro,
           "tipo_perfil":validateUser.tipo_perfil,
@@ -170,5 +175,7 @@ export class LoginService {
       throw new BadRequestException('Hubo un error', { cause: new Error() });
     }
   }
+
+}
 
 }

@@ -1,3 +1,4 @@
+
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -53,3 +54,7 @@ export class ProfileService {
 
   
 }
+import { Injectable } from '@nestjs/common';
+
+@Injectable()
+export class ProfileService {}

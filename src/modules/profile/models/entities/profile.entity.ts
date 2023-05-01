@@ -38,3 +38,7 @@ export class ProfileEntity extends BaseEntity {
   fk_login: number;
 
 }
+  @OneToOne(() => LoginEntity)
+  @JoinColumn({ name: 'fk_login' })
+  login: LoginEntity;
+}
