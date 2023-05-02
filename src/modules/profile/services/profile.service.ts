@@ -11,16 +11,13 @@ export class ProfileService {
     private ProfileReposository: Repository<ProfileEntity>
   ){}
 
-  // Obtiene los datos de la persona
-  async getPerson(personBody): Promise<any>{
-
-    try{
-
+  async getPerson(personBody): Promise<any> {
+    try {
       const data = {
         buscador: personBody.buscador,
         donde: personBody.donde
-      }
-      const getData = this.ProfileReposository.query(
+      };
+      const getData = await this.ProfileReposository.query(
         `SELECT \
           p.region, \
           p.comuna, \
@@ -34,7 +31,7 @@ export class ProfileService {
         FROM persona p \
         INNER JOIN educacion e \
           ON e.fk_persona = p.id \
-        INNER JOIN habilidades h \ 
+        INNER JOIN habilidades h \
           ON e.fk_persona = p.id \
         WHERE CONCAT(h.texto_habilidades, e.institucion, e.titulo) ILIKE '%${data.buscador}%' \
           AND CONCAT(p.region, p.comuna) ILIKE '%${data.donde}%' \
@@ -42,12 +39,56 @@ export class ProfileService {
       );
       console.log(getData);
       return getData;
+    } catch {
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
+  }
+
+  // Obtiene los datos de la persona
+  async getIdPerson(id): Promise<any>{
+
+    try{
+
+      const getData = await this.ProfileReposository.query(
+        `SELECT \
+          p.region, \
+          p.comuna, \
+          e.institucion, \
+          e.titulo, \
+          e.mes_inicio, \
+          e.ano_inicio, \
+          e.mes_fin, \
+          e.ano_fin, \
+          h.texto_habilidades \
+        FROM persona p \
+        INNER JOIN educacion e \
+          ON e.fk_persona = p.id \
+        INNER JOIN habilidades h \
+          ON e.fk_persona = p.id \
+        WHERE p.id = ${id} \
+        `
+      );
+
+      const jsonResponse = getData.reduce((accumulator, { region, comuna, institucion, titulo, mes_inicio, ano_inicio, mes_fin, ano_fin, texto_habilidades }) => ({
+        ...accumulator,
+        region,
+        comuna,
+        institucion,
+        titulo,
+        mes_inicio,
+        ano_inicio,
+        mes_fin,
+        ano_fin,
+        texto_habilidades
+      }), {});
+     
+      return jsonResponse;
 
     }
     catch{
       throw new BadRequestException('Hubo un error', { cause: new Error() });
     }
-    
+   
   }
 
 
