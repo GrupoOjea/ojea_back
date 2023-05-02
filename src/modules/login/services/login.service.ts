@@ -1,7 +1,6 @@
 import { BadRequestException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { LoginEntity } from '../models/entities/login.entity';
@@ -18,12 +17,8 @@ export class LoginService {
     @InjectRepository(ProfileEntity)
     private PersonaReposository: Repository<ProfileEntity>,
     private jwtService: JwtService,
-    @InjectRepository(ProfileEntity)
-    private PersonaReposository: Repository<ProfileEntity>,
-    private jwtService: JwtService
   ){}
 
-  // Crea un usuario
   // Crea un usuario
   async createLogin(registerBody): Promise<any>{
 
@@ -175,7 +170,5 @@ export class LoginService {
       throw new BadRequestException('Hubo un error', { cause: new Error() });
     }
   }
-
-}
 
 }
