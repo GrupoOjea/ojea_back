@@ -73,7 +73,7 @@ export class CompanyService {
       const getData = await this.CompanyReposository.findOne(
         {
           where:{
-            fk_login: id
+            fk_login: id 
           }
         }
       )
