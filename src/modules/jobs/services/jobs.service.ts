@@ -168,4 +168,33 @@ export class JobsService {
       throw new BadRequestException('Hubo un error', { cause: new Error() });
     }
   }
+
+  // Busca todos los empleos de una empresa
+  async jobsCompany(id): Promise<any>{
+    try{
+
+      const getData = this.JobsRepository.query(
+        `SELECT \
+          em.id, \
+          ep.nombre, \
+          ep.region, \
+          ep.comuna, \
+          em.cargo, \
+          em.contrato, \
+          em.jornada, \
+          em.modalidad, \
+          em.aptitudes \
+        FROM empresa ep \
+        INNER JOIN empleos em \
+          ON ep.id = em.fk_empresa \
+        WHERE em.fk_empresa = 1 \
+        `
+      );
+      return getData;
+
+    }
+    catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
+  }
 }
