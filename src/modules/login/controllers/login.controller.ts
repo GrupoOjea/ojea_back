@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Post, Put, Headers } from '@nestjs/common';
+import { newPasswordDTO, registerDTO, resetPasswordDTO, sessionDTO } from '../models/dto/login.register.dto';
 import { LoginService } from '../services/login.service';
-import { registerDTO, sessionDTO } from '../models/dto/login.register.dto';
 
 @Controller('login')
 export class LoginController {
@@ -16,5 +16,20 @@ export class LoginController {
     return await this.loginService.sessionLogin(sessionBody);
   }
 
+  @Put('forgot-password')
+  async forgotPassword(@Body() reqbody: resetPasswordDTO){
+    return await this.loginService.forgotPassword(reqbody);
+  }
+    
+  @Put('new-password')
+  async createNewPassword(@Body() reqbody: newPasswordDTO){
+    return await this.loginService.createPassword(reqbody);
+  }
+
+  @Post('valid-sms')
+  async validsms(@Body() reqbody){
+    console.log(reqbody)
+    return await this.loginService.validateSmsToken(reqbody.smstoken);
+  }
 
 }

@@ -27,3 +27,24 @@ export class sessionDTO{
   clave: string;
 
 }
+
+export class resetPasswordDTO{
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+}
+
+
+export class newPasswordDTO{
+
+  @IsEmail()
+  @IsNotEmpty()
+  newpassword: string;
+
+  @IsEmail()
+  @IsNotEmpty()
+  smstoken: string;
+
+}
