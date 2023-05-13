@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstants } from './guard/constants';
 import { profileModule } from './modules/profile/profile.module';
 import { companyModule } from './modules/company/company.module';
+import { jobsModule } from './modules/jobs/jobs.module';
 
 
 @Module({
@@ -15,6 +16,7 @@ import { companyModule } from './modules/company/company.module';
     loginModule,
     profileModule,
     companyModule,
+    jobsModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' }
