@@ -183,11 +183,13 @@ export class JobsService {
           em.contrato, \
           em.jornada, \
           em.modalidad, \
-          em.aptitudes \
+          em.aptitudes, \
+          em.experiencia, \
+          em.descripcion \
         FROM empresa ep \
         INNER JOIN empleos em \
           ON ep.id = em.fk_empresa \
-        WHERE em.fk_empresa = 1 \
+        WHERE em.fk_empresa = ${id} \
         `
       );
       return getData;
