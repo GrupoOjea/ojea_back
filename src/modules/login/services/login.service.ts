@@ -75,7 +75,8 @@ export class LoginService {
         if(!getPersona){
           return {
             "id": validateUser.id,
-            "estado": 0
+            "estado": 0,
+            "tipo_perfil": validateUser.tipo_perfil
           }
         }
 
