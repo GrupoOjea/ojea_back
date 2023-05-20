@@ -9,7 +9,7 @@ export class PostulationService {
     @InjectRepository(PostulationEntity)
     private PostulationRepository: Repository<PostulationEntity>
    
-  ){}
+  ){} 
 
   // Crea los registro en la tablas
   async createPostulation(postulationBody): Promise<any>{
