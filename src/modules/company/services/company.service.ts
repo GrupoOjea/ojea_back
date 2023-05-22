@@ -9,7 +9,7 @@ export class CompanyService {
   constructor(
     @InjectRepository(CompanyEntity)  
     private CompanyReposository: Repository<CompanyEntity>
-  ){}
+  ){} 
 
   // Crea los datos de la empresa
   async createCompany(companyBody): Promise<any>{
