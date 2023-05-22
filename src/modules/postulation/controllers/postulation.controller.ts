@@ -16,4 +16,8 @@ export class PostulationController {
     return this.postulationService.getPostulation(id);
   }
 
+  @Get('information/:id')
+  async getIformationPerson(@Param('id') id: number): Promise<string>{
+    return this.postulationService.getInformationPerson(id);
+  }
 }

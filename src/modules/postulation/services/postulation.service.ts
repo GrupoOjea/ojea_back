@@ -2,6 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import PostulationEntity from '../models/entities/postulation.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { get } from 'http';
 
 @Injectable()
 export class PostulationService {
@@ -58,4 +59,27 @@ export class PostulationService {
     
   }
 
+  // Obtiene los datos de la empresa
+  async getInformationPerson(id): Promise<any>{
+
+    try{
+
+      const getInformationP = this.PostulationRepository.query(
+        `select pe.nombre,pe.apellido,pe.profesion,pe.telefono,pe.region,pe.comuna,ed.institucion,ed.titulo,ha.texto_habilidades \ 
+        from persona pe\
+        inner join educacion ed ON ed.fk_persona = pe.id\
+        inner join habilidades ha on  ha.fk_persona =pe.id\
+        inner join postulacion po on po.fk_persona =pe.id\
+        where po.fk_empleo =${id};
+        
+          `
+      );
+      
+      return getInformationP;
+    }
+    catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
+    
+  }
 }
