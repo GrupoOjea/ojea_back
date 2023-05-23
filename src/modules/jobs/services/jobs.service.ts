@@ -190,6 +190,7 @@ export class JobsService {
         INNER JOIN empleos em \
           ON ep.id = em.fk_empresa \
         WHERE em.fk_empresa = ${id} \
+        ORDER BY em.id ASC\
         `
       );
       return getData;
