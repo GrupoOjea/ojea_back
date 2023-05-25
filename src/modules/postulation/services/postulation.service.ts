@@ -65,14 +65,25 @@ export class PostulationService {
     try{
 
       const getInformationP = this.PostulationRepository.query(
-        `select pe.nombre,pe.apellido,pe.profesion,pe.telefono,pe.region,pe.comuna,ed.institucion,ed.titulo,ha.texto_habilidades \ 
-        from persona pe\
-        inner join educacion ed ON ed.fk_persona = pe.id\
-        inner join habilidades ha on  ha.fk_persona =pe.id\
-        inner join postulacion po on po.fk_persona =pe.id\
-        where po.fk_empleo =${id};
-        
-          `
+        `SELECT \
+          pe.nombre, \
+          pe.apellido, \
+          pe.profesion, \
+          pe.telefono, \
+          pe.region, \
+          pe.comuna, \
+          ed.institucion, \
+          ed.titulo, \
+          ha.texto_habilidades \ 
+        FROM persona pe \
+        INNER JOIN educacion ed \ 
+          ON ed.fk_persona = pe.id \
+        INNER JOIN habilidades ha \
+          ON ha.fk_persona = pe.id \
+        INNER JOIN postulacion po \
+          ON po.fk_persona = pe.id \
+        WHERE po.fk_empleo = ${id};
+        `
       );
       
       return getInformationP;
