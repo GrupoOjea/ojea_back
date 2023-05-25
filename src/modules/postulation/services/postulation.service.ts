@@ -3,6 +3,8 @@ import PostulationEntity from '../models/entities/postulation.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
 import { transporter } from 'src/mailer/mailer';
+import * as PDFDocument from 'pdfkit';
+import * as fs from 'fs';
 
 @Injectable()
 export class PostulationService {
@@ -113,6 +115,36 @@ export class PostulationService {
       return 'Correo enviado'
     }
     catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
+  }
+
+  // Genera PDF del CV
+  async pdf(id): Promise<any> {
+    try {
+      return new Promise<any>((resolve, reject) => {
+        const pdfDoc = new PDFDocument();
+
+        // Agrega contenido al PDF
+        pdfDoc.text('¡Hola, este es un PDF generado con NestJS!');
+
+        const filePath = 'C:/Users/aless/OneDrive/Documentos/pdf.pdf';
+        const writeStream = fs.createWriteStream(filePath);
+
+        // Escribe el PDF en el archivo
+        pdfDoc.pipe(writeStream);
+
+        pdfDoc.end();
+
+        writeStream.on('finish', () => {
+          resolve(filePath);
+        });
+
+        writeStream.on('error', (error) => {
+          reject(error);
+        });
+      });
+    } catch (error) {
       throw new BadRequestException('Hubo un error', { cause: new Error() });
     }
   }

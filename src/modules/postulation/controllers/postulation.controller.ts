@@ -25,5 +25,10 @@ export class PostulationController {
   async postSendEmail(@Body() registerBody: emailDTO): Promise<string>{
     return await this.postulationService.sendEmail(registerBody);
   }
+
+  @Get('pdf/:id')
+  async generarPdf(@Param('id') id: number): Promise<string>{
+    return await this.postulationService.pdf(id);
+  }
   
 }
