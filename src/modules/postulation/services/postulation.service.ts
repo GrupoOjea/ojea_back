@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import PostulationEntity from '../models/entities/postulation.entity';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { get } from 'http';
+import { transporter } from 'src/mailer/mailer';
 
 @Injectable()
 export class PostulationService {
@@ -92,5 +92,28 @@ export class PostulationService {
       throw new BadRequestException('Hubo un error', { cause: new Error() });
     }
     
+  }
+
+  // Email para contacto
+  async sendEmail(body){
+    try{
+      let info = await transporter.sendMail({
+        from: "Contacto Ojea",
+        to: body.email, 
+        subject: "Nueva fase de postulación", 
+        text: "Postulación", 
+        html: 
+          `<body>
+            <div class="container">
+              <p>${body.body_email}</p>
+            </div>
+          </body>`
+      });
+
+      return 'Correo enviado'
+    }
+    catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
   }
 }

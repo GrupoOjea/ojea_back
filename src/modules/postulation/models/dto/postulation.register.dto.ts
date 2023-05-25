@@ -19,3 +19,15 @@ export class createDTO{
   fk_empleo: number;
 
 }
+
+export class emailDTO{
+
+  @IsEmail()
+  @IsNotEmpty()
+  email: string;
+
+  @IsString()
+  @IsNotEmpty()
+  body_email: string;
+
+}
