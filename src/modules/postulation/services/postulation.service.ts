@@ -107,7 +107,9 @@ export class PostulationService {
         html: 
           `<body>
             <div class="container">
-              <p>${body.body_email}</p>
+              <p>Le informamos que la empresa ${body.nombre_empresa} desea que continúe con el proceso de postulación al cargo de ${body.cargo} </p>
+              <p>Si desea ser parte de este proceso, contáctese a través del siguiente correo y envíe su CV:</p>
+              <p>${body.email_empresa}</p>
             </div>
           </body>`
       });

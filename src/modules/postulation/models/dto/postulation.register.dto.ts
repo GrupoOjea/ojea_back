@@ -26,8 +26,16 @@ export class emailDTO{
   @IsNotEmpty()
   email: string;
 
+  @IsEmail()
+  @IsNotEmpty()
+  email_empresa: string;
+
   @IsString()
   @IsNotEmpty()
-  body_email: string;
+  nombre_empresa: string;
+
+  @IsString()
+  @IsNotEmpty()
+  cargo: string;
 
 }
