@@ -105,13 +105,70 @@ export class PostulationService {
         subject: "Nueva fase de postulación", 
         text: "Postulación", 
         html: 
-          `<body>
+          `  
+        <head>
+            <meta charset="UTF-8">
+            <title>Correo Electrónico Corporativo</title>
+            <style>
+                    body {
+                      font-family: Arial, sans-serif;
+                      background-color: #f1f1f1;
+                      margin: 0;
+                      padding: 0;
+                                }
+    
+                    .container {
+                      max-width: 600px;
+                      margin: 0 auto;
+                      padding: 20px;
+                      background-color: #fff;
+                      border-radius: 5px;
+                      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+                    }
+    
+                    h1 {
+                      color: #333;
+                      font-size: 24px;
+                      margin-bottom: 20px;
+                    }
+    
+                    p {
+                      font-size: 16px;
+                      line-height: 1.5;
+                      margin-bottom: 10px;
+                    }
+                    
+                    .footer {
+                      margin-top: 40px;
+                      text-align: center;
+                      font-size: 14px;
+                      color: #999;
+                    }
+                </style>
+             </head>
+
+            <body>
             <div class="container">
-              <p>Le informamos que la empresa ${body.nombre_empresa} desea que continúe con el proceso de postulación al cargo de ${body.cargo} </p>
-              <p>Si desea ser parte de este proceso, contáctese a través del siguiente correo y envíe su CV:</p>
-              <p>${body.email_empresa}</p>
+              <h1>¡Bienvenido a Ojea!</h1>
+              
+               <p>Estimado/a [Nombre del destinatario],</p>
+            
+               <p>Le informamos que la empresa ${body.nombre_empresa} desea que continúe con el proceso de postulación al cargo de ${body.cargo} </p>    
+             
+              <p>Estamos encantados de contar con usted en el siguiente proceso de postulacion</p>
+
+              <p>Si tiene alguna pregunta o necesita ayuda, no dude en ponerse en contacto con nosotros envía tu CV al siguiente correo ${body.email_empresa} Estamos aquí para ayudarlo/a.</p>
+      
+              <p>¡Le deseamos mucho éxito!</p>
+
+              <div class="footer">
+                <p>Atentamente,</p>
+                <p>Equipo de Recursos Humanos</p>
+                <p>${body.nombre_empresa}</p>
+              </div>
             </div>
-          </body>`
+          </body>   
+          `
       });
 
       return 'Correo enviado'
@@ -126,11 +183,12 @@ export class PostulationService {
     try {
       return new Promise<any>((resolve, reject) => {
         const pdfDoc = new PDFDocument();
+     
 
         // Agrega contenido al PDF
         pdfDoc.text('¡Hola, este es un PDF generado con NestJS!');
-
-        const filePath = 'C:/Users/aless/OneDrive/Documentos/pdf.pdf';
+        
+        const filePath = 'C:/Users/Eme/Documents/pdf.pdf';
         const writeStream = fs.createWriteStream(filePath);
 
         // Escribe el PDF en el archivo
@@ -150,4 +208,5 @@ export class PostulationService {
       throw new BadRequestException('Hubo un error', { cause: new Error() });
     }
   }
+  
 }
