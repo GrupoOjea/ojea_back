@@ -92,4 +92,71 @@ export class ProfileService {
   }
 
   
+   // Crea los datos de la persona
+   async createPerson(personBody): Promise<any>{
+
+    try{
+
+      const dataBody = {
+        nombre: personBody.nombre,
+        apellido: personBody.apellido,
+        edad: personBody.edad,
+        profesion: personBody.profesion,
+        telefono: personBody.telefono,
+        region: personBody.region,
+        comuna: personBody.comuna,
+        fecha_creacion: new Date(Date.now()),
+        fk_login: personBody.fk_login
+      }
+
+      const insertPerson = await this.ProfileReposository.insert(dataBody);
+
+      if (insertPerson){
+        const updateLogin = await this.ProfileReposository.query(
+          `UPDATE login
+            SET estatus_registro = 1
+          WHERE id = ${personBody.fk_login};
+        `
+        );
+        return insertPerson;
+      }
+      else{
+        throw new BadRequestException('Hubo un error', { cause: new Error() });
+      }
+      
+
+    }
+    catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
+    
+  }
+
+  // Modifica los datos de la persona
+  async updatePerson(personBody): Promise<any>{
+
+    try{
+
+      const dataBody = {
+        nombre: personBody.nombre,
+        apellido: personBody.apellido,
+        edad: personBody.edad,
+        profesion: personBody.profesion,
+        telefono: personBody.telefono,
+        region: personBody.region,
+        comuna: personBody.comuna,
+        fecha_modificacion: new Date(Date.now())
+      }
+
+      const updatePerson = await this.ProfileReposository.update(personBody.id, dataBody);
+      return updatePerson;
+
+    }
+    catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
+    
+  }
+
+  
 }
