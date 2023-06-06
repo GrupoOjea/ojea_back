@@ -16,7 +16,7 @@ export class JobsController {
     return this.jobsService.updateJobs(registerBody);
   }
 
-  @Get('search')
+  @Post('search')
   async getJobs(@Body() registerBody: searchJobsDTO): Promise<string>{
     return this.jobsService.searchJobs(registerBody);
   }

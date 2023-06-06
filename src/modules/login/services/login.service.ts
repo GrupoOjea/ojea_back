@@ -56,21 +56,31 @@ export class LoginService {
   }
 
   // Inicio de sesion
-  async sessionLogin(sessionBody): Promise<any>{
+async sessionLogin(sessionBody): Promise<any>{
 
-    const validateUser = await this.LoginReposository.findOne(
-      {
-        where:{
-          email: sessionBody.email
-        }
+  const validateUser = await this.LoginReposository.findOne(
+    {
+      where:{
+        email: sessionBody.email
       }
-    )
+    }
+  )
 
-    if (validateUser) {
-      const isMatch = await bcrypt.compare(sessionBody.clave, validateUser.clave);
+  if (validateUser) {
+    const isMatch = await bcrypt.compare(sessionBody.clave, validateUser.clave);
 
-      if(isMatch){
-        const token =  this.jwtService.sign({userId: validateUser.id})
+    if(isMatch){
+      const token =  this.jwtService.sign({userId: validateUser.id})
+
+      if(validateUser.tipo_perfil == 2){
+        const newBody = { 
+          "id": validateUser.id,
+            "estado": 0,
+            "tipo_perfil": validateUser.tipo_perfil
+        }
+        return newBody
+      }
+      else {
         const getPersona = await this.PersonaReposository.findOne({where:{fk_login: validateUser.id }})
         if(!getPersona){
           return {
@@ -80,9 +90,10 @@ export class LoginService {
           }
         }
 
-      // Obtiene nombre y apellido hasta el primer espacio, luego concatene y deja el primer nombre y primer apellido
+        // Obtiene nombre y apellido hasta el primer espacio, luego concatene y deja el primer nombre y primer apellido
         const namePersona = getPersona.nombre.split(' ').shift()+' '+getPersona.apellido.split(' ').shift();
         const newBody = { 
+          "id": validateUser.id,
           "estado": validateUser.estado,
           "estatus_registro": validateUser.estatus_registro,
           "tipo_perfil":validateUser.tipo_perfil,
@@ -92,10 +103,12 @@ export class LoginService {
         return newBody
       }
     }
-    else {
-      return "Usuario no encontrado"
-    }
   }
+  else {
+    return "Usuario no encontrado"
+  }
+}
+
 
   // Manda el email para restablecer contraseña
   async forgotPassword(resetMail: resetPasswordDTO): Promise<string> {        
