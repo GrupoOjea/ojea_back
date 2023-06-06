@@ -65,8 +65,8 @@ export class JobsService {
     try{
 
       const data = {
-        buscador: jobsBody.buscador,
-        donde: jobsBody.donde
+        buscador: jobsBody.buscador || '',
+      donde: jobsBody.donde || ''
       }
 
       const getData = this.JobsRepository.query(
@@ -78,7 +78,9 @@ export class JobsService {
           em.contrato, \
           em.jornada, \
           em.modalidad, \
-          em.aptitudes \
+          em.aptitudes, \
+          em.descripcion, \
+          em.experiencia \
         FROM empresa ep \
         INNER JOIN empleos em \
           on em.fk_empresa = ep.id \
