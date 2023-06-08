@@ -74,7 +74,7 @@ export class SkillsService {
           ON ed.fk_persona = pe.id \
         LEFT JOIN habilidades ha \
           ON ha.fk_persona = pe.id \
-        WHERE lo.id = 2
+        WHERE lo.id = ${id}
           `
       );
       return getData;
