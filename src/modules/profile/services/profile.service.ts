@@ -50,7 +50,7 @@ export class ProfileService {
     try{
 
       const getData = await this.ProfileReposository.query(
-        `SELECT \
+        /**   `SELECT \
           p.region, \
           p.comuna, \
           e.institucion, \
@@ -66,22 +66,59 @@ export class ProfileService {
         INNER JOIN habilidades h \ 
           ON e.fk_persona = p.id \
         WHERE p.id = ${id} \
+        `*/ 
+
+              `SELECT \
+          p.id, \
+          p.nombre, \
+          p.apellido, \
+          p.edad, \
+          p.profesion, \
+          p.telefono, \
+          p.region, \ 
+          p.comuna, \
+          e.institucion, \
+          e.titulo, \
+          e.mes_inicio, \
+          e.ano_inicio, \
+          e.mes_fin, \
+          e.ano_fin, \
+          h.id as id_skill, \
+          h.texto_habilidades \
+        FROM persona p \
+        LEFT JOIN educacion e \
+          ON e.fk_persona = p.id \
+        LEFT JOIN habilidades h  \
+          ON h.fk_persona = p.id \
+        WHERE p.fk_login = ${id}\
         `
       );
 
-      const jsonResponse = getData.reduce((accumulator, { region, comuna, institucion, titulo, mes_inicio, ano_inicio, mes_fin, ano_fin, texto_habilidades }) => ({
+      const jsonResponse = getData.reduce((accumulator, item) => ({
         ...accumulator,
-        region,
-        comuna,
-        institucion,
-        titulo,
-        mes_inicio,
-        ano_inicio,
-        mes_fin,
-        ano_fin,
-        texto_habilidades
+        id: item.id,
+        nombre: item.nombre,
+        apellido: item.apellido,
+        edad: item.edad,
+        profesion: item.profesion,
+        telefono: item.telefono,
+        region: item.region,
+        comuna: item.comuna,
+        institucion: item.institucion,
+        titulo: item.titulo,
+        mes_inicio: item.mes_inicio,
+        ano_inicio: item.ano_inicio,
+        mes_fin: item.mes_fin,
+        ano_fin: item.ano_fin,
+        habilidades: [
+          ...(accumulator.habilidades || []),
+          {
+            id_skill: item.id_skill,
+            texto_habilidades: item.texto_habilidades
+          }
+        ]
       }), {});
-      
+  
       return jsonResponse;
 
     }

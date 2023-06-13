@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DatabaseModule } from '../../database/database.module';
+import { DatabaseModule } from 'src/database/database.mudule';
 import { EducationEntity } from './models/entities/education.entity';
 import { EducationController } from './controllers/education.controller';
 import { EducationService } from './services/education.service';
