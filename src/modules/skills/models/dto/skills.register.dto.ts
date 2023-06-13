@@ -6,6 +6,10 @@ export class skillsRegisterDTO{
   @IsNotEmpty()
   texto_habilidades: string;
 
+  @IsString()
+  @IsNotEmpty()
+  habilidad_principal: string;
+
   @IsNumber()
   @IsNotEmpty()
   fk_persona: number;

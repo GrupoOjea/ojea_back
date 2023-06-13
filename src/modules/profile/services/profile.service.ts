@@ -84,7 +84,8 @@ export class ProfileService {
           e.mes_fin, \
           e.ano_fin, \
           h.id as id_skill, \
-          h.texto_habilidades \
+          h.texto_habilidades, \
+          h.habilidad_principal \
         FROM persona p \
         LEFT JOIN educacion e \
           ON e.fk_persona = p.id \
@@ -114,7 +115,8 @@ export class ProfileService {
           ...(accumulator.habilidades || []),
           {
             id_skill: item.id_skill,
-            texto_habilidades: item.texto_habilidades
+            texto_habilidades: item.texto_habilidades,
+            habilidad_principal: item.habilidad_principal
           }
         ]
       }), {});
