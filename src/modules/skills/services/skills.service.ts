@@ -18,6 +18,7 @@ export class SkillsService {
 
       const data = {
         texto_habilidades: skillsBody.texto_habilidades,
+        habilidad_principal: skillsBody.habilidad_principal,
         fecha_creacion: new Date(Date.now()),
         fk_persona: skillsBody.fk_persona
       }

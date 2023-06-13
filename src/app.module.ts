@@ -11,6 +11,7 @@ import { jobsModule } from './modules/jobs/jobs.module';
 import { postulationModule } from './modules/postulation/postulation.module';
 import { SkillsService } from './modules/skills/services/skills.service';
 import { skillsModule } from './modules/skills/skills.module';
+import { educationModule } from './modules/education/education.module';
 
 
 @Module({
@@ -22,6 +23,7 @@ import { skillsModule } from './modules/skills/skills.module';
     jobsModule,
     postulationModule,
     skillsModule,
+    educationModule,
     JwtModule.register({
       secret: jwtConstants.secret,
       signOptions: { expiresIn: '60s' }
