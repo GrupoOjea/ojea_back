@@ -21,6 +21,10 @@ export class EducationController {
   async getEducation(@Param('id') id: string): Promise<any>{
     return await this.educationService.getEducation(id);
   }
+  @Get('get-edit/:id')
+  async getEducationEdit(@Param('id') id: string): Promise<any>{
+    return await this.educationService.getEducationEdit(id);
+  }
 
   @Delete('delete/:id')
   async deleteEducation(@Param('id') id: string): Promise<any>{

@@ -19,6 +19,6 @@ export class SkillsEntity extends BaseEntity {
   fk_persona: number;
 
   @Column()
-  habilidad_principal: string;
+  fk_subhabilidad: number;
 
 }

@@ -50,47 +50,23 @@ export class ProfileService {
     try{
 
       const getData = await this.ProfileReposository.query(
-        /**   `SELECT \
-          p.region, \
-          p.comuna, \
-          e.institucion, \
-          e.titulo, \
-          e.mes_inicio, \
-          e.ano_inicio, \
-          e.mes_fin, \
-          e.ano_fin, \
-          h.texto_habilidades \
-        FROM persona p \
-        INNER JOIN educacion e \
-          ON e.fk_persona = p.id \
-        INNER JOIN habilidades h \ 
-          ON e.fk_persona = p.id \
-        WHERE p.id = ${id} \
-        `*/ 
 
               `SELECT \
-          p.id, \
-          p.nombre, \
-          p.apellido, \
-          p.edad, \
-          p.profesion, \
-          p.telefono, \
-          p.region, \ 
-          p.comuna, \
-          e.institucion, \
-          e.titulo, \
-          e.mes_inicio, \
-          e.ano_inicio, \
-          e.mes_fin, \
-          e.ano_fin, \
-          h.id as id_skill, \
-          h.texto_habilidades, \
-          h.habilidad_principal \
-        FROM persona p \
-        LEFT JOIN educacion e \
-          ON e.fk_persona = p.id \
-        LEFT JOIN habilidades h  \
-          ON h.fk_persona = p.id \
+              p.id,  \
+              p.nombre, \
+              p.apellido, \
+              p.edad, \
+              p.profesion, \
+              p.telefono, \
+              p.region, \
+              p.comuna, \
+              h.id AS id_skill, \
+              s.sub_habilidad,  \
+              h2.habilidad_principal \ 
+            FROM persona p \
+            LEFT JOIN habilidades h ON h.fk_persona = p.id \
+            left join subhabilidad s on s.id = h.fk_subhabilidad \ 
+            left join habilidad h2 on h2.id = s.fk_habilidad  \
         WHERE p.fk_login = ${id}\
         `
       );
@@ -115,7 +91,7 @@ export class ProfileService {
           ...(accumulator.habilidades || []),
           {
             id_skill: item.id_skill,
-            texto_habilidades: item.texto_habilidades,
+            sub_habilidad: item.sub_habilidad,
             habilidad_principal: item.habilidad_principal
           }
         ]
