@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Put, Get, Param } from '@nestjs/common';
+import { Body, Controller, Post, Put, Get, Param, Delete } from '@nestjs/common';
 import { skillsRegisterDTO, skillsUpdateDTO } from '../models/dto/skills.register.dto';
 import { SkillsService } from '../services/skills.service';
 
@@ -17,10 +17,28 @@ export class SkillsController {
     return await this.skillsService.updateSkills(registerBody); 
   }
 
+  @Get('mainskills')
+  async getMainSkills(): Promise<string>{
+    return await this.skillsService.getMainSkills(); 
+  }
+
+  @Get('subskills/:id')
+  async getSubSkills(@Param('id') id: string): Promise<string>{
+    return await this.skillsService.getSubSkills(id); 
+  }
+
   @Get(':id')
   async idPerson(@Param('id') id: string): Promise<string>{
     return this.skillsService.searchSkills(id);
   }
+
+  @Delete('delete/:id')
+  async deleteSkills(@Param('id') id: string): Promise<any>{
+    return await this.skillsService.deleteSkills(id);
+  }
+
+  
+
 
 }
 

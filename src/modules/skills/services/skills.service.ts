@@ -12,25 +12,35 @@ export class SkillsService {
   ){}
 
   //Crear las habilidades
-  async createSkills(skillsBody): Promise<any>{
+  async createSkills(skillsBody): Promise<any> {
 
-    try{
+    try {
 
-      const data = {
-        texto_habilidades: skillsBody.texto_habilidades,
-        habilidad_principal: skillsBody.habilidad_principal,
-        fecha_creacion: new Date(Date.now()),
-        fk_persona: skillsBody.fk_persona
-      }
+        const existingSkill = await this.skillsRepository.findOne({
+            where: {
+                fk_subhabilidad: skillsBody.fk_subhabilidad,
+                fk_persona: skillsBody.fk_persona
+            }
+        });
+        
+        if (existingSkill) {
+            throw new BadRequestException('La subhabilidad ya está asociada a esta persona', { cause: new Error() });
+        }
 
-      const insertData = await this.skillsRepository.insert(data);
-      return insertData;
+        const data = {
+            fk_subhabilidad: skillsBody.fk_subhabilidad,
+            fecha_creacion: new Date(Date.now()),
+            fk_persona: skillsBody.fk_persona
+        }
 
+        const insertData = await this.skillsRepository.insert(data);
+        return insertData;
+
+    } catch (error) {
+        throw new BadRequestException('Hubo un error', { cause: error });
     }
-    catch{
-      throw new BadRequestException('Hubo un error', { cause: new Error() });
-    }
-  }
+}
+
 
   async updateSkills(skillsBody): Promise<any>{
     try{
@@ -85,6 +95,44 @@ export class SkillsService {
       throw new BadRequestException('Hubo un error', { cause: new Error() });
     }
 
+  }
+
+  
+  async getMainSkills(): Promise<any>{
+    try{
+
+      const getData = this.skillsRepository.query(`SELECT * FROM habilidad`);
+      return getData;
+
+    }
+    catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
+
+  }
+
+  async getSubSkills(id): Promise<any>{
+    try{
+
+      const getData = this.skillsRepository.query(`SELECT * FROM subhabilidad where fk_habilidad = ${id} `);
+      return getData;
+
+    }
+    catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
+
+  }
+
+  async deleteSkills(id): Promise<any>{
+
+    try{
+      const deleteData = this.skillsRepository.delete(id);
+      return deleteData;
+    }
+    catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
   }
 
 

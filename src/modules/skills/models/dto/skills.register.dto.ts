@@ -2,17 +2,15 @@ import { IsNumber, IsString,  IsNotEmpty, IsEmail } from 'class-validator';
 
 export class skillsRegisterDTO{
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
-  texto_habilidades: string;
-
-  @IsString()
-  @IsNotEmpty()
-  habilidad_principal: string;
+  fk_subhabilidad: number;
 
   @IsNumber()
   @IsNotEmpty()
   fk_persona: number;
+
+
 
 }
 

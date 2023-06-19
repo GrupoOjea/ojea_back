@@ -60,6 +60,7 @@ export class EducationService {
     try{
       const getData = await this.EducationReposository.query(
         `SELECT \
+          e.id, \
           e.institucion, \
           e.titulo, \
           e.mes_inicio, \
@@ -72,6 +73,34 @@ export class EducationService {
         INNER JOIN educacion e \
           ON p.id = e.fk_persona \
         WHERE l.id = '${id}'
+        `
+      );
+      return getData;
+    }
+    catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
+  }
+
+  // Obtiene la educacion de un usuario
+  async getEducationEdit(id): Promise<any>{
+    
+    try{
+      const getData = await this.EducationReposository.query(
+        `SELECT \
+          e.id, \
+          e.institucion, \
+          e.titulo, \
+          e.mes_inicio, \
+          e.ano_inicio, \
+          e.mes_fin, \
+          e.ano_fin \
+        FROM login l \
+        INNER JOIN persona p \
+          ON l.id = p.fk_login \
+        INNER JOIN educacion e \
+          ON p.id = e.fk_persona \
+        WHERE e.id = '${id}'
         `
       );
       return getData;
