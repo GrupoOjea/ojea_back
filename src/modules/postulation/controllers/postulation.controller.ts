@@ -1,5 +1,5 @@
-import { Body, Controller, Post, Get, Param } from '@nestjs/common';
-import { createDTO, emailDTO } from '../models/dto/postulation.register.dto';
+import { Body, Controller, Post, Get, Param, Put } from '@nestjs/common';
+import { createDTO, emailDTO, updatePostulationDTO } from '../models/dto/postulation.register.dto';
 import { PostulationService } from '../services/postulation.service';
 
 @Controller('postulation')
@@ -19,6 +19,16 @@ export class PostulationController {
   @Get('information/:id')
   async getIformationPerson(@Param('id') id: number): Promise<string>{
     return this.postulationService.getInformationPerson(id);
+  }
+
+  @Get('my-jobs/:id')
+  async getMyJobs(@Param('id') id: number): Promise<string>{
+    return this.postulationService.getMyJobs(id);
+  }
+
+  @Put('update')
+  async putCompany(@Body() registerBody: updatePostulationDTO): Promise<string>{
+    return await this.postulationService.updatePostulationType(registerBody);
   }
 
   @Post('send')

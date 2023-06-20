@@ -20,6 +20,22 @@ export class createDTO{
 
 }
 
+export class updatePostulationDTO{
+
+  @IsNumber()
+  @IsNotEmpty()
+  tipo_empleo: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  id: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  fk_empleo: number;
+
+}
+
 export class emailDTO{
 
   @IsEmail()

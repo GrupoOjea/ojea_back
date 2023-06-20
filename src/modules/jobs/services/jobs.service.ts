@@ -71,6 +71,7 @@ export class JobsService {
 
       const getData = this.JobsRepository.query(
         `SELECT \
+          em.id, \
           ep.nombre, \
           ep.region, \
           ep.comuna, \

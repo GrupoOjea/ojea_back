@@ -96,6 +96,50 @@ export class PostulationService {
     
   }
 
+  // Obtiene los datos de la empresa
+  async getMyJobs(id): Promise<any>{
+
+    try{
+
+      const getMyJobs = this.PostulationRepository.query(
+
+            ` SELECT 
+            p.id,
+            p.tipo_empleo,
+            p.fk_persona,
+            p.fk_empleo,
+            em.cargo,
+            e.nombre,
+            e.comuna, 
+            em.modalidad   
+        FROM postulacion p 
+        LEFT JOIN empleos em ON em.id  = p.fk_empleo 
+        LEFT JOIN empresa e ON e.id = em.fk_empresa 
+        WHERE fk_persona = ${id};
+        `
+      );
+      
+      return getMyJobs;
+    }
+    catch{
+      throw new BadRequestException('Hubo un error', { cause: new Error() });
+    }
+    
+  }
+
+  async updatePostulationType(postulationBody): Promise<any> {
+    try {
+        const updatedData = await this.PostulationRepository.update(
+            { id: postulationBody.id, fk_empleo: postulationBody.fk_empleo },
+            { tipo_empleo: postulationBody.tipo_empleo }
+        );
+        return updatedData;
+    } catch (error) {
+        throw new BadRequestException('Hubo un error', { cause: error });
+    }
+}
+
+
   // Email para contacto
   async sendEmail(body){
     try{
