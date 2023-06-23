@@ -39,11 +39,11 @@ export class resetPasswordDTO{
 
 export class newPasswordDTO{
 
-  @IsEmail()
+  @IsString()
   @IsNotEmpty()
   newpassword: string;
 
-  @IsEmail()
+  @IsString()
   @IsNotEmpty()
   smstoken: string;
 
