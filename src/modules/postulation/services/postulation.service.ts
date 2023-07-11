@@ -68,23 +68,27 @@ export class PostulationService {
 
       const getInformationP = this.PostulationRepository.query(
         `SELECT \
-          pe.nombre, \
-          pe.apellido, \
-          pe.profesion, \
-          pe.telefono, \
-          pe.region, \
-          pe.comuna, \
-          ed.institucion, \
-          ed.titulo, \
-          ha.texto_habilidades \ 
-        FROM persona pe \
-        INNER JOIN educacion ed \ 
+            po.id, \
+            pe.nombre, \
+            pe.apellido, \ 
+            pe.telefono, \
+            pe.region, \
+            pe.comuna, \
+            pe.id as id_persona, \
+            tipo_empleo, \
+            ed.institucion, \ 
+                    ed.titulo, \
+            (SELECT STRING_AGG(s.sub_habilidad, ', ') \
+            FROM habilidades h \
+            INNER JOIN subhabilidad s \
+            ON s.id = h.fk_subhabilidad \
+            WHERE h.fk_persona = pe.id) as habilidades \
+          FROM persona pe \
+          INNER JOIN postulacion po \
+          ON po.fk_persona = pe.id  \
+          LEFT JOIN educacion ed \
           ON ed.fk_persona = pe.id \
-        INNER JOIN habilidades ha \
-          ON ha.fk_persona = pe.id \
-        INNER JOIN postulacion po \
-          ON po.fk_persona = pe.id \
-        WHERE po.fk_empleo = ${id};
+          WHERE po.fk_empleo = ${id} and tipo_empleo in (1,2); \
         `
       );
       
@@ -111,7 +115,8 @@ export class PostulationService {
             em.cargo,
             e.nombre,
             e.comuna, 
-            em.modalidad   
+            em.modalidad,
+            p.estado   
         FROM postulacion p 
         LEFT JOIN empleos em ON em.id  = p.fk_empleo 
         LEFT JOIN empresa e ON e.id = em.fk_empresa 
@@ -137,6 +142,18 @@ export class PostulationService {
     } catch (error) {
         throw new BadRequestException('Hubo un error', { cause: error });
     }
+}
+
+async updatePostulationState(postulationBody): Promise<any> {
+  try {
+      const updatedData = await this.PostulationRepository.update(
+          { id: postulationBody.id },
+          { estado: postulationBody.estado }
+      );
+      return updatedData;
+  } catch (error) {
+      throw new BadRequestException('Hubo un error', { cause: error });
+  }
 }
 
 

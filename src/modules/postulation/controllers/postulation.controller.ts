@@ -1,5 +1,5 @@
 import { Body, Controller, Post, Get, Param, Put } from '@nestjs/common';
-import { createDTO, emailDTO, updatePostulationDTO } from '../models/dto/postulation.register.dto';
+import { createDTO, emailDTO, updatePostulationDTO, updatePostulationStateDTO } from '../models/dto/postulation.register.dto';
 import { PostulationService } from '../services/postulation.service';
 
 @Controller('postulation')
@@ -29,6 +29,11 @@ export class PostulationController {
   @Put('update')
   async putCompany(@Body() registerBody: updatePostulationDTO): Promise<string>{
     return await this.postulationService.updatePostulationType(registerBody);
+  }
+
+  @Put('update-state')
+  async putState(@Body() registerBody: updatePostulationStateDTO): Promise<string>{
+    return await this.postulationService.updatePostulationState(registerBody);
   }
 
   @Post('send')

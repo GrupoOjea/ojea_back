@@ -36,6 +36,19 @@ export class updatePostulationDTO{
 
 }
 
+export class updatePostulationStateDTO{
+
+  @IsNumber()
+  @IsNotEmpty()
+  estado: number;
+
+  @IsNumber()
+  @IsNotEmpty()
+  id: number;
+
+
+
+}
 export class emailDTO{
 
   @IsEmail()
