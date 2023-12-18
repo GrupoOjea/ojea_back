@@ -1,31 +1,37 @@
 import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
-@Entity('empleos')
-export class JobsEntity extends BaseEntity{
-    
+@Entity('admin')
+export class AdminEntity extends BaseEntity {
+
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  cargo: string;
+  nombre: string;
 
   @Column()
-  contrato: string;
-  
-  @Column()
-  jornada: string;
-
-  /*@Column()
-  experiencia: number;*/
+  run: string;
 
   @Column()
-  modalidad: string;
+  telefono: string;
 
   @Column()
-  aptitudes: string;
+  region: string;
+
+  @Column()
+  comuna: string;
+
+  @Column()
+  rubro: string;
+
+  @Column()
+  pagina_web: string;
 
   @Column()
   descripcion: string;
+
+  @Column()
+  tipo_plan: string;
 
   @Column()
   fecha_creacion: Date;
@@ -34,5 +40,9 @@ export class JobsEntity extends BaseEntity{
   fecha_modificacion: Date;
 
   @Column()
-  fk_empresa: number;
+  fk_login: number;
+
+  @Column()
+  nombreEmpresa: string;
+
 }

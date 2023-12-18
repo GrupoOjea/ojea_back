@@ -14,9 +14,9 @@ export class createJobsDTO {
   @IsNotEmpty()
   jornada: string;
 
-  @IsNumber()
+  /*@IsNumber()
   @IsNotEmpty()
-  experiencia: number;
+  experiencia: number;*/
 
   @IsString()
   @IsNotEmpty()
@@ -54,9 +54,9 @@ export class updateJobsDTO {
   @IsNotEmpty()
   jornada: string;
 
-  @IsNumber()
+  /*@IsNumber()
   @IsNotEmpty()
-  experiencia: number;
+  experiencia: number;*/
 
   @IsString()
   @IsNotEmpty()
