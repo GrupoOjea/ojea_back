@@ -79,8 +79,14 @@ async sessionLogin(sessionBody): Promise<any>{
             "tipo_perfil": validateUser.tipo_perfil
         }
         return newBody
-      }
-      else {
+      }else if (validateUser.tipo_perfil == 3){
+        const newBody = { 
+          "id": validateUser.id,
+            "estado": 0,
+            "tipo_perfil": validateUser.tipo_perfil
+        }
+        return newBody
+      }else {
         const getPersona = await this.PersonaReposository.findOne({where:{fk_login: validateUser.id }})
         if(!getPersona){
           return {

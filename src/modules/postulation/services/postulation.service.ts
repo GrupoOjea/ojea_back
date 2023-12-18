@@ -62,7 +62,7 @@ export class PostulationService {
   }
 
   // Obtiene los datos de la empresa
-  async getInformationPerson(id): Promise<any>{
+  async getInformationPersonAll(id): Promise<any>{
 
     try{
 
@@ -88,7 +88,7 @@ export class PostulationService {
           ON po.fk_persona = pe.id  \
           LEFT JOIN educacion ed \
           ON ed.fk_persona = pe.id \
-          WHERE po.fk_empleo = ${id} and tipo_empleo in (1,2); \
+          WHERE po.fk_empleo = ${id} and tipo_empleo in ('1','2'); \
         `
       );
       
@@ -99,6 +99,45 @@ export class PostulationService {
     }
     
   }
+
+    // Obtiene los datos de la empresa
+    async getInformationPerson(id): Promise<any>{
+
+      try{
+  
+        const getInformationP = this.PostulationRepository.query(
+          `SELECT \
+              po.id, \
+              pe.nombre, \
+              pe.apellido, \ 
+              pe.telefono, \
+              pe.region, \
+              pe.comuna, \
+              pe.id as id_persona, \
+              tipo_empleo, \
+              ed.institucion, \ 
+                      ed.titulo, \
+              (SELECT STRING_AGG(s.sub_habilidad, ', ') \
+              FROM habilidades h \
+              INNER JOIN subhabilidad s \
+              ON s.id = h.fk_subhabilidad \
+              WHERE h.fk_persona = pe.id) as habilidades \
+            FROM persona pe \
+            INNER JOIN postulacion po \
+            ON po.fk_persona = pe.id  \
+            LEFT JOIN educacion ed \
+            ON ed.fk_persona = pe.id \
+            WHERE po.id = ${id} and tipo_empleo in ('1','2'); \
+          `
+        );
+        
+        return getInformationP;
+      }
+      catch{
+        throw new BadRequestException('Hubo un error', { cause: new Error() });
+      }
+      
+    }
 
   // Obtiene los datos de la empresa
   async getMyJobs(id): Promise<any>{
