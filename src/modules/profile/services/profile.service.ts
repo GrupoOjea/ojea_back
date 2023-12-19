@@ -27,14 +27,14 @@ export class ProfileService {
           e.ano_inicio, \
           e.mes_fin, \
           e.ano_fin, \
-          h.texto_habilidades \
-        FROM persona p \
-        INNER JOIN educacion e \
-          ON e.fk_persona = p.id \
-        INNER JOIN habilidades h \
-          ON e.fk_persona = p.id \
+          STRING_AGG(s.sub_habilidad, ', ') AS subhabilidades_agrupadas \
+          FROM persona p \
+          INNER JOIN educacion e ON e.fk_persona = p.id \
+          INNER JOIN habilidades h ON h.fk_persona = p.id \
+          INNER JOIN subhabilidad s ON s.id = h.fk_subhabilidad \
         WHERE CONCAT(h.texto_habilidades, e.institucion, e.titulo) ILIKE '%${data.buscador}%' \
           AND CONCAT(p.region, p.comuna) ILIKE '%${data.donde}%' \
+          GROUP BY p.region, p.comuna, e.institucion, e.titulo, e.mes_inicio, e.ano_inicio, e.mes_fin, e.ano_fin \
         `
       );
       console.log(getData);

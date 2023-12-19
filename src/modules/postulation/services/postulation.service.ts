@@ -88,7 +88,7 @@ export class PostulationService {
           ON po.fk_persona = pe.id  \
           LEFT JOIN educacion ed \
           ON ed.fk_persona = pe.id \
-          WHERE po.fk_empleo = ${id} and tipo_empleo in ('1','2'); \
+          WHERE po.fk_empleo = ${id} and tipo_empleo in ('1','2') and estado <> '3' ; \
         `
       );
       

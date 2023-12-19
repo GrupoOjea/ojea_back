@@ -44,7 +44,7 @@ export class JobsService {
         cargo: jobsBody.cargo,
         contrato: jobsBody.contrato,
         jornada: jobsBody.jornada,
-        experiencia: jobsBody.experiencia,
+        //experiencia: jobsBody.experiencia,
         modalidad: jobsBody.modalidad,
         aptitudes: jobsBody.aptitudes,
         descripcion: jobsBody.descripcion,
