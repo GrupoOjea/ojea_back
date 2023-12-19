@@ -50,37 +50,10 @@ export class updateAdminDTO{
   id: number;
 
   @IsString()
-  @IsNotEmpty()
-  nombre: string;
+  estatus_registro: string;
 
-  @IsString()
-  @IsNotEmpty()
-  run: string;
+  @IsNumber() 
+  tipo_perfil: number;
 
-  @IsString()
-  @IsNotEmpty()
-  telefono: string;
-
-  @IsString()
-  @IsNotEmpty()
-  region: string;
-
-  @IsString()
-  @IsNotEmpty()
-  comuna: string;
-
-  @IsString()
-  @IsNotEmpty()
-  rubro: string;
-
-  @IsString()
-  pagina_web: string;
-
-  @IsString()
-  descripcion: string;
-
-  @IsNumber()
-  @IsNotEmpty()
-  tipo_plan: number;
 
 }

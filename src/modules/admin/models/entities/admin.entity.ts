@@ -7,6 +7,33 @@ export class AdminEntity extends BaseEntity {
   id: number;
 
   @Column()
+  tipo_perfil: number;
+
+
+  @Column()
+  email: string;
+
+  @Column()
+  clave: string;
+
+  @Column()
+  estatus_registro: string;
+
+  @Column()
+  fecha_crecion: Date;
+
+  @Column()
+  fecha_modificacion: Date;
+
+  @Column()
+  estado: number;
+
+  @Column()
+  reset_token: string;
+
+
+
+  @Column()
   nombre: string;
 
   @Column()
@@ -36,8 +63,8 @@ export class AdminEntity extends BaseEntity {
   @Column()
   fecha_creacion: Date;
 
-  @Column()
-  fecha_modificacion: Date;
+
+ 
 
   @Column()
   fk_login: number;

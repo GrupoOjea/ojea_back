@@ -40,7 +40,7 @@ export class AdminService {
   }
 
   // Modifica los datos de la empresa
-  async updateAdmin(AdminBody): Promise<any>{
+ /* async updateAdmin(AdminBody): Promise<any>{
 
     try{
       const data = {
@@ -64,6 +64,19 @@ export class AdminService {
       throw new BadRequestException('Hubo un error', { cause: new Error() });
     }
     
+  }*/
+
+  async updateAdmin(AdminBody): Promise<any> {
+    try {
+      const query = `UPDATE Login SET tipo_perfil = $1, estatus_registro = $2, fecha_modificacion = $3 WHERE id = $4`;
+      const values = [AdminBody.tipo_perfil, AdminBody.estatus_registro, new Date(), AdminBody.id];
+  
+      const updateAdmin = await this.AdminReposository.query(query, values);
+      return updateAdmin;
+    } catch (error) {
+      console.error('Error al actualizar el administrador:', error);
+      throw new BadRequestException('Hubo un error al actualizar', { cause: error });
+    }
   }
 
   // Obtiene los datos de la empresa
@@ -91,7 +104,7 @@ export class AdminService {
     try{
 
       const getAllUser = this.AdminReposository.query(
-        `SELECT EMAIL, ESTATUS_REGISTRO, P.NOMBRE, P.APELLIDO, E.NOMBRE AS NOMBRE_EMPRESA, TIPO_PERFIL \
+        `SELECT L.ID,EMAIL, ESTATUS_REGISTRO, P.NOMBRE, P.APELLIDO, E.NOMBRE AS NOMBRE_EMPRESA, TIPO_PERFIL \
         FROM LOGIN L \
         LEFT JOIN PERSONA P ON L.ID = P.FK_LOGIN \
         LEFT JOIN EMPRESA E ON L.ID = E.FK_LOGIN \
